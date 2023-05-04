@@ -57,5 +57,5 @@ def analyze_market(google_query):
 
 
 if __name__ == "__main__":
-    query = "online shoe market size"
+    query = "old age home care market"
     analyze_market(query)
