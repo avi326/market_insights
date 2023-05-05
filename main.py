@@ -15,15 +15,9 @@ def extract_text_data(link):
     return data
 
 
-def generate_market_insights(text_data, openai_key):
-    market_analyzer = MarketInsighter(openai_key)
-    insights = []
-    for data in text_data:
-        keys_to_keep = ['title', 'description', 'raw_text']
-        temp_data = utils.filter_text_data(text_data, keys_to_keep)
-        res = market_analyzer.create_insights(json.dumps(temp_data))
-        insights.append((data['link'], res))
-    return insights
+def generate_market_insights(data, market_analyzer):
+    res = market_analyzer.create_insights(json.dumps(data))
+    return res
 
 
 def print_insights(insights):
@@ -55,11 +49,19 @@ def analyze_market(google_query):
 
     truncated_text_data = utils.truncate_text_data(last_x_years_text_data)
 
-    insights = generate_market_insights(truncated_text_data, config["OPENAI_KEY"])
+    market_analyzer = MarketInsighter(config["OPENAI_KEY"])
+    insights_list = []
 
-    print_insights(insights)
+    for data in truncated_text_data:
+        try:
+            insights = generate_market_insights(data, market_analyzer)
+            insights_list.append((data["link"], insights))
+        except Exception as e:
+            print(f"problem in link {data['link']}: {e}")
+
+    print_insights(insights_list)
 
 
 if __name__ == "__main__":
-    query = "old age home care market"
+    query = "size of the online shoe market"
     analyze_market(query)
