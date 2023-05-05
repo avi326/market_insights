@@ -7,6 +7,7 @@ from data_analysis.chatgpt import MarketInsighter
 import utils
 from pprint import pprint
 
+
 def extract_text_data(link):
     text_extractor = WebTextExtractor(link)
     data = text_extractor.extract_text()
@@ -22,9 +23,10 @@ def generate_market_insights(data, market_analyzer, google_query):
 
 def print_insights(insights_list):
     for link, insights in insights_list:
-        print("#########################################")
-        print(f"link {link}")
-        print(insights)
+        if insights["insights"]:
+            print("#########################################")
+            print(f"link {link}")
+            print(insights)
 
 
 def analyze_market(google_query):

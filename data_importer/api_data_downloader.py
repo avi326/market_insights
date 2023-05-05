@@ -7,7 +7,7 @@ class GoogleSearchAPI:
 
     def get_links(self, query):
         search_results = []
-        for url in search(query, num_results=10):
+        for url in search(query, num_results=5):
             search_results.append(url)
         return search_results
 
