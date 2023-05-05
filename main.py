@@ -32,8 +32,9 @@ def print_insights(insights_list):
 def analyze_market(google_query):
     config = dotenv_values(".env")
 
+    num_results = 10
     google_search = GoogleSearchAPI()
-    links = google_search.get_links(google_query)
+    links = google_search.get_links(google_query, num_results)
 
     text_data = []
     for link in links:
