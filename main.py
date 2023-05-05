@@ -5,7 +5,7 @@ from data_importer.api_data_downloader import GoogleSearchAPI
 from data_importer.web_text_extractor import WebTextExtractor
 from data_analysis.chatgpt import MarketInsighter
 import utils
-
+from pprint import pprint
 
 def extract_text_data(link):
     text_extractor = WebTextExtractor(link)
@@ -15,16 +15,16 @@ def extract_text_data(link):
     return data
 
 
-def generate_market_insights(data, market_analyzer):
-    res = market_analyzer.create_insights(json.dumps(data))
+def generate_market_insights(data, market_analyzer, google_query):
+    res = market_analyzer.create_insights(google_query, json.dumps(data))
     return res
 
 
-def print_insights(insights):
-    for link, insight in insights:
+def print_insights(insights_list):
+    for link, insights in insights_list:
         print("#########################################")
         print(f"link {link}")
-        print(insight)
+        print(insights)
 
 
 def analyze_market(google_query):
@@ -54,7 +54,7 @@ def analyze_market(google_query):
 
     for data in truncated_text_data:
         try:
-            insights = generate_market_insights(data, market_analyzer)
+            insights = generate_market_insights(data, market_analyzer, google_query)
             insights_list.append((data["link"], insights))
         except Exception as e:
             print(f"problem in link {data['link']}: {e}")

@@ -21,9 +21,9 @@ class MarketInsighter(ChatGPT):
     def __init__(self, api_key):
         super().__init__(api_key)
 
-    def create_insights(self, text):
+    def create_insights(self, subject, text):
         prompt = f"""
-                Prompt: Examine the given marketing-related article and extract crucial insights, especially any noteworthy numerical data or statistics. Present a clear comprehension of the main points in the context of marketing strategies and trends. If no insights are discovered, provide a JSON object with an empty insights array. don't write anything, just the json. Structure the information in the following JSON format:
+                Prompt: Examine the given marketing-related article and extract crucial insights, especially any noteworthy numerical data or statistics or taking about money. If no insights are discovered, provide a JSON object with an empty insights array. don't write anything, just the json. Structure the information in the following JSON format:
                 
                 {{
                 "insights": [
