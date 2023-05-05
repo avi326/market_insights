@@ -7,15 +7,12 @@ from data_analysis.chatgpt import MarketInsighter
 import utils
 
 
-def extract_text_data(links):
-    text_data = []
-    for link in links:
-        text_extractor = WebTextExtractor(link)
-        data = text_extractor.extract_text()
-        if data:
-            data['link'] = link
-            text_data.append(data)
-    return text_data
+def extract_text_data(link):
+    text_extractor = WebTextExtractor(link)
+    data = text_extractor.extract_text()
+    if data:
+        data['link'] = link
+    return data
 
 
 def generate_market_insights(text_data, openai_key):
@@ -41,7 +38,13 @@ def analyze_market(google_query):
     google_search = GoogleSearchAPI()
     links = google_search.get_links(google_query)
 
-    text_data = extract_text_data(links)
+    text_data = []
+    for link in links:
+        try:
+            data = extract_text_data(link)
+            text_data.append(data)
+        except Exception:
+            print(f"fail to get data from {link}")
 
     keys_to_keep = ['title', 'description', 'date', 'raw_text', 'pagetype', 'link']
     filtered_text_data = utils.filter_text_data(text_data, keys_to_keep)

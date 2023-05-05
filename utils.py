@@ -3,7 +3,7 @@ import spacy
 
 # Load the spaCy model
 nlp = spacy.load("en_core_web_sm")
-
+import datetime
 
 def has_any_kind_of_number(sentence):
     # Process the sentence using the spaCy model
@@ -49,6 +49,6 @@ def filter_last_x_years_text_data(text_data, x_years):
 
 def truncate_text_data(text_data):
     for data in text_data:
-        new_raw_text = utils.get_first_1000_words(data['raw_text'])
+        new_raw_text = get_first_1000_words(data['raw_text'])
         data['raw_text'] = new_raw_text
     return text_data
