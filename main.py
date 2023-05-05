@@ -7,6 +7,9 @@ from data_analysis.chatgpt import MarketInsighter
 import utils
 from pprint import pprint
 
+NUM_RESULTS = 10
+X_YEARS = 1
+
 
 def extract_text_data(link):
     text_extractor = WebTextExtractor(link)
@@ -29,10 +32,9 @@ def print_insights(insights_list):
             print(insights)
 
 
-def analyze_market(google_query):
+def analyze_market(google_query, num_results=NUM_RESULTS, x_years=X_YEARS):
     config = dotenv_values(".env")
 
-    num_results = 10
     google_search = GoogleSearchAPI()
     links = google_search.get_links(google_query, num_results)
 
@@ -47,7 +49,6 @@ def analyze_market(google_query):
     keys_to_keep = ['title', 'description', 'date', 'raw_text', 'pagetype', 'link']
     filtered_text_data = utils.filter_text_data(text_data, keys_to_keep)
 
-    x_years = 1
     last_x_years_text_data = utils.filter_last_x_years_text_data(filtered_text_data, x_years)
 
     truncated_text_data = utils.truncate_text_data(last_x_years_text_data)
