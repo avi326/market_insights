@@ -16,7 +16,7 @@ def extract_text_data(link):
     return data
 
 
-def generate_market_insights(data, market_analyzer, google_query):
+def generate_market_insights(data, market_analyzer):
     res = market_analyzer.create_insights(json.dumps(data))
     return res
 
@@ -57,7 +57,7 @@ def analyze_market(google_query):
 
     for data in truncated_text_data:
         try:
-            insights = generate_market_insights(data, market_analyzer, google_query)
+            insights = generate_market_insights(data, market_analyzer)
             insights_list.append((data["link"], insights))
         except Exception as e:
             print(f"problem in link {data['link']}: {e}")
