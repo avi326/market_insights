@@ -17,7 +17,7 @@ def extract_text_data(link):
 
 
 def generate_market_insights(data, market_analyzer, google_query):
-    res = market_analyzer.create_insights(google_query, json.dumps(data))
+    res = market_analyzer.create_insights(json.dumps(data))
     return res
 
 
