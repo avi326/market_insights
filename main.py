@@ -19,9 +19,10 @@ def generate_market_insights(text_data, openai_key):
     market_analyzer = MarketInsighter(openai_key)
     insights = []
     for data in text_data:
-        res = market_analyzer.create_insights(json.dumps(data))
-        if res["insights"]:
-            insights.append((data['link'], res))
+        keys_to_keep = ['title', 'description', 'raw_text']
+        temp_data = utils.filter_text_data(text_data, keys_to_keep)
+        res = market_analyzer.create_insights(json.dumps(temp_data))
+        insights.append((data['link'], res))
     return insights
 
 
